@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins',sans-serif;
+}
+.container{
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(0deg,#77069d,#cd6408);
+    width: 100%;
+    height: 100vh;
+}
+.list{
+    height: auto;
+    margin: 50px auto auto;
+    width: 70vh;
+    border-radius:15px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.header{
+    display: flex;
+    margin: 15px auto;
+}
+.list .header img{
+    width: 30px;
+    height: 30px;
+}
