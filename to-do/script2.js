@@ -38,7 +38,7 @@ function showTasks(){
                 const date=d.getDate();
                 const year=d.getFullYear();
                 const month=d.getMonth();
-                alert(date)
+        
                 if(my2Array==null){
                  let array=[];
                  task["date2"]=date;

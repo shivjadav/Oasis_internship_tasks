@@ -1,6 +1,5 @@
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
-
 function check_user(){
     const user=sessionStorage.getItem("user");
     if(user==null){
@@ -10,8 +9,8 @@ function check_user(){
         msg.innerHTML=`user is logged in with ${user} id!!`;
     }
 }
-
-function  Register_user(e){
+var bcrypt = dcodeIO.bcrypt;
+async function  Register_user(e){
     e.preventDefault();
     const email=document.getElementById("email");
     const pass=document.getElementById("pass");
@@ -35,9 +34,10 @@ function  Register_user(e){
     }else{
         let users=JSON.parse(localStorage.getItem("users"))
         let flag=false;
+        let hashed=await bcrypt.hash(pass.value,10);
         let ob={
             email:email.value,
-            pass:pass.value
+            pass:hashed
         }
         if(users==null){
             let array=[]
@@ -53,7 +53,7 @@ function  Register_user(e){
                 users.push(ob)
                 localStorage.setItem("users",JSON.stringify(users));
                 sessionStorage.setItem("user",ob.email);
-                window.location.href="./secured_page.html";
+                window.location.href="./sign_in.html";
             }else{
                 alert("user already registered!!");
                 window.location.href="./sign_in.html";
@@ -63,30 +63,36 @@ function  Register_user(e){
     }
 }
 
-function login_user(e){
+async function login_user(e) {
     e.preventDefault();
-    let flag=false;
-    const users=JSON.parse(localStorage.getItem("users"));
-    const msg=document.getElementById("message");
-    const email=document.getElementById("email");
-    const pass=document.getElementById("pass");
-    if(users==null){
-        msg.innerHTML="please enter valid email and password!!";
-        email.value="";
-        pass.value="";
-    }else{
-        users.map((user)=>{
-            if(user.email==email.value && user.pass==pass.value){
-               flag=true;
+    let flag = false;
+    const users = JSON.parse(localStorage.getItem("users"));
+    const msg = document.getElementById("message");
+    const email = document.getElementById("email");
+    const pass = document.getElementById("pass");
+
+    if (users == null) {
+        msg.innerHTML = "Please enter a valid email and password!";
+        email.value = "";
+        pass.value = "";
+    } else {
+        for (let user of users) {
+            if (user.email === email.value) {
+                const result = await bcrypt.compare(pass.value, user.pass);
+                if (result) {
+                    flag = true;
+                    break;
+                }
             }
-        });
-        if(flag===false){
-            msg.innerHTML="please enter valid email and password!!";
-            email.value="";
-            pass.value="";
-        }else{
-            sessionStorage.setItem("user",email.value);
-            window.location.href="./secured_page.html";
+        }
+
+        if (!flag) {
+            msg.innerHTML = "Please enter a valid email and password!";
+            email.value = "";
+            pass.value = "";
+        } else {
+            sessionStorage.setItem("user", email.value);
+            window.location.href = "./secured_page.html";
         }
     }
 }

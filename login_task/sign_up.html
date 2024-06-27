@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sign-up page</title>
     <link rel="stylesheet" href="./task4_css.css">
+    <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+    <script src="./script_auth.js"></script>
 </head>
 <body>
     <div class="container">
@@ -20,16 +22,19 @@
                        <p>Email:</p>  <input type="text" id="email" placeholder="Enter email"/>
                     </div>
                     <div>
-                        <p>Password:</p> <input type="text" id="pass" placeholder="Enter Password"/>
+                        <p>Password:</p> <input type="password" id="pass" placeholder="Enter Password"/>
                     </div>
                     <div>
-                        <p>Confirm Password:</p> <input type="text" id="cf_pass" placeholder="Enter Password"/>
+                        <p>Confirm Password:</p> <input type="password" id="cf_pass" placeholder="Enter Password"/>
                     </div>
                     <input type="submit" value="submit" id="submit"/>
                 </form>
                 <a href="./sign_in.html">Sign In</a>
         </div>
     </div>
-    <script src="./script_auth.js"></script>
+    
+    
+    
+
 </body>
 </html>
